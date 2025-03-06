@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="vbCustomerTableRoot" spacing="10" alignment="CENTER" prefHeight="400.0" prefWidth="600.0"
+      xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.demo.controller.CustomerTableController">
+    <children>
+        <TableView fx:id="tvCustomers" prefHeight="350.0" prefWidth="600.0">
+            <columns>
+                <TableColumn fx:id="tcId" text="ID" prefWidth="50"/>
+                <TableColumn fx:id="tcUsername" text="Логин" prefWidth="100"/>
+                <TableColumn fx:id="tcFirstname" text="Имя" prefWidth="100"/>
+                <TableColumn fx:id="tcLastname" text="Фамилия" prefWidth="100"/>
+                <TableColumn fx:id="tcPassword" text="Пароль" prefWidth="150"/>
+            </columns>
+        </TableView>
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Добавить покупателя" onAction="#goToCustomerForm"/>
+            <Button text="Редактировать покупателя" onAction="#editCustomer"/>
+            <Button text="Главное меню" onAction="#goToMainForm"/>
+        </HBox>
+    </children>
+    <padding>
+        <Insets top="20" bottom="20" left="20" right="20"/>
+    </padding>
+</VBox>

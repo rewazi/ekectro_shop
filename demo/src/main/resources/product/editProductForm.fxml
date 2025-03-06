@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="vbEditProductFormRoot" prefHeight="379.0" prefWidth="628.0"
+      xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.demo.controller.EditProductFormController">
+    <children>
+        <Label alignment="CENTER" prefHeight="89.0" prefWidth="600.0" text="Изменение атрибутов продукта">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <HBox prefHeight="28.0" prefWidth="600.0">
+            <children>
+                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="161.0" text="Название">
+                    <HBox.margin>
+                        <Insets right="10.0" />
+                    </HBox.margin>
+                </Label>
+                <TextField fx:id="tfName" prefHeight="25.0" prefWidth="308.0" />
+                <TextField fx:id="tfId" prefHeight="25.0" prefWidth="0.0" visible="false" />
+            </children>
+        </HBox>
+        <HBox prefHeight="112.0" prefWidth="602.0">
+            <children>
+                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="161.0" text="Бренд">
+                    <HBox.margin>
+                        <Insets right="10.0" />
+                    </HBox.margin>
+                </Label>
+                <ListView fx:id="lvBrands" prefHeight="98.0" prefWidth="309.0" />
+            </children>
+        </HBox>
+        <HBox prefHeight="28.0" prefWidth="600.0">
+            <children>
+                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="161.0" text="Год выпуска">
+                    <HBox.margin>
+                        <Insets right="10.0" />
+                    </HBox.margin>
+                </Label>
+                <TextField fx:id="tfReleaseYear" prefHeight="25.0" prefWidth="174.0" />
+            </children>
+        </HBox>
+        <HBox prefHeight="28.0" prefWidth="600.0">
+            <children>
+                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="161.0" text="Количество">
+                    <HBox.margin>
+                        <Insets right="10.0" />
+                    </HBox.margin>
+                </Label>
+                <TextField fx:id="tfQuantity" prefHeight="25.0" prefWidth="118.0" />
+            </children>
+        </HBox>
+        <HBox prefHeight="28.0" prefWidth="600.0">
+            <children>
+                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="161.0" text="В наличии">
+                    <HBox.margin>
+                        <Insets right="10.0" />
+                    </HBox.margin>
+                </Label>
+                <TextField fx:id="tfCount" prefHeight="25.0" prefWidth="76.0" />
+            </children>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="600.0" spacing="5.0">
+            <children>
+                <Button mnemonicParsing="false" onAction="#goEdit" prefHeight="25.0" prefWidth="125.0" text="Изменить" />
+                <Button mnemonicParsing="false" onAction="#goToMainForm" text="Главная" />
+            </children>
+        </HBox>
+    </children>
+</VBox>
