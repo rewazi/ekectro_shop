@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="vbMenuFormRoot" prefHeight="45.0" prefWidth="599.0"
+      xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.demo.controller.MenuFormController">
+    <children>
+        <MenuBar>
+            <menus>
+                <Menu fx:id="productMenu" text="Продукты">
+                    <items>
+                        <MenuItem fx:id="showProductForm" onAction="#showProductForm" text="Добавить продукт" />
+                        <MenuItem fx:id="showBrandForm" onAction="#showBrandForm" text="Добавить бренд" />
+                        <MenuItem text="Список продуктов" />
+                    </items>
+                </Menu>
+                <Menu fx:id="customerMenu" text="Покупатели">
+                    <items>
+                        <MenuItem fx:id="showCustomerForm" onAction="#showCustomerForm" text="Добавить покупателя" />
+                        <MenuItem fx:id="showCustomerTable" onAction="#showCustomerTable" text="Список покупателей" />
+                    </items>
+                </Menu>
+                <Menu fx:id="userMenu" text="Пользователь">
+                    <items>
+                        <MenuItem fx:id="showLoginForm" onAction="#showLoginForm" text="Вход" />
+                        <MenuItem fx:id="logout" onAction="#logout" text="Выход" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </children>
+</VBox>

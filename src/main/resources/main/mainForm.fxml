@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<VBox fx:id="vbMainFormRoot" prefHeight="400.0" prefWidth="600.0"
+      xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.demo.controller.MainFormController">
+    <children>
+        <TableView fx:id="tvListProducts" prefHeight="426.0" prefWidth="600.0">
+            <columns>
+                <TableColumn fx:id="tcId" prefWidth="47.0" text="Id" />
+                <TableColumn fx:id="tcName" prefWidth="194.0" text="Название продукта" />
+                <TableColumn fx:id="tcBrand" prefWidth="84.0" text="Бренд" />
+                <TableColumn fx:id="tcReleaseYear" prefWidth="93.0" text="Год выпуска" />
+                <TableColumn fx:id="tcQuantity" prefWidth="90.0" text="Количество" />
+                <TableColumn fx:id="tcCount" prefWidth="91.0" text="В наличии" />
+            </columns>
+        </TableView>
+        <HBox fx:id="hbEditProduct" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="600.0" visible="false">
+            <children>
+                <Button mnemonicParsing="false" onAction="#showEditProductForm" text="Редактировать продукт" />
+            </children>
+        </HBox>
+    </children>
+</VBox>

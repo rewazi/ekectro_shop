@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="vbCustomerFormRoot" spacing="10" alignment="CENTER" prefHeight="300.0" prefWidth="400.0"
+      xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.demo.controller.CustomerFormController">
+    <children>
+        <Label text="Форма покупателя" alignment="CENTER">
+            <font>
+                <Font size="18"/>
+            </font>
+        </Label>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Имя:"/>
+            <TextField fx:id="tfFirstname" prefWidth="200"/>
+        </HBox>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Фамилия:"/>
+            <TextField fx:id="tfLastname" prefWidth="200"/>
+        </HBox>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Логин:"/>
+            <TextField fx:id="tfUsername" prefWidth="200"/>
+        </HBox>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Пароль:"/>
+            <PasswordField fx:id="pfPassword" prefWidth="200"/>
+        </HBox>
+        <HBox spacing="10" alignment="CENTER">
+            <!-- Кнопка вызывает отдельный метод saveCustomer() для покупателей -->
+            <Button text="Добавить покупателя" onAction="#saveCustomer"/>
+            <Button text="Таблица покупателей" onAction="#goToCustomerTable"/>
+        </HBox>
+    </children>
+    <padding>
+        <Insets top="20" bottom="20" left="20" right="20"/>
+    </padding>
+</VBox>
