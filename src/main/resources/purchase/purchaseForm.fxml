@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/23.0.2"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.electro_shop.controller.PurchaseFormController"
+      alignment="CENTER" spacing="10" style="-fx-padding: 20;">
+    <children>
+        <Label text="Покупка товара" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+        <GridPane hgap="10" vgap="10">
+            <children>
+                <Label text="Покупатель:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cbCustomer" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Товар:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cbEquipment" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Наличие товара (шт.):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="tfQuantity" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            </children>
+        </GridPane>
+        <Button text="Купить" onAction="#handlePurchase"/>
+        <Button text="Главная" onAction="#goToMainForm"/>
+        <Label fx:id="lblPurchaseResult"/>
+    </children>
+</VBox>
