@@ -54,7 +54,7 @@ public class EditProductFormController implements Initializable {
         if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR) &&
                 !CustomerService.currentUserHasRole(CustomerService.ROLES.MANAGER)) {
 
-            showAccessDeniedAlert("У вас нет прав на редактирование продуктов.");
+
             return;
         }
 
@@ -64,13 +64,6 @@ public class EditProductFormController implements Initializable {
         formService.loadMainForm();
     }
 
-    private void showAccessDeniedAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Ошибка прав доступа");
-        alert.setHeaderText("Доступ запрещён");
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 
     @FXML
     private void goToMainForm() throws IOException {

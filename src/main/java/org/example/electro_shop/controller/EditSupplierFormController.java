@@ -51,7 +51,7 @@ public class EditSupplierFormController {
 
         if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR) &&
                 !CustomerService.currentUserHasRole(CustomerService.ROLES.MANAGER)) {
-            showAccessDeniedAlert("У вас нет прав на редактирование поставщика.");
+
             return;
         }
 
@@ -62,13 +62,7 @@ public class EditSupplierFormController {
         formService.loadSupplierListForm();
     }
 
-    private void showAccessDeniedAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Ошибка прав доступа");
-        alert.setHeaderText("Доступ запрещён");
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
 
     @FXML
     private void cancelEdit() throws IOException {

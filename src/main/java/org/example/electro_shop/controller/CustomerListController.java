@@ -72,7 +72,7 @@ public class CustomerListController implements Initializable {
     private void editCustomer() {
 
         if (!customerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
-            showAccessDeniedAlert("У вас нет доступа к редактированию покупателей.");
+
             return;
         }
 
@@ -96,7 +96,7 @@ public class CustomerListController implements Initializable {
     @FXML
     private void deleteCustomer() {
         if (!customerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
-            showAccessDeniedAlert("Нельзя вам это делать!");
+
             return;
         }
         Customer selectedCustomer = tvCustomerList.getSelectionModel().getSelectedItem();

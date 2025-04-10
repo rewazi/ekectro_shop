@@ -18,8 +18,10 @@ public class CustomerService {
     public CustomerService(CustomerRepository repository) {
         this.repository = repository;
         initSuperUser();
+        initManager();
     }
 
+    // Генерация суперпользователя (администратора)
     private void initSuperUser() {
         if (repository.count() > 0) {
             return;
@@ -34,6 +36,25 @@ public class CustomerService {
         admin.getRoles().add(ROLES.CUSTOMER.toString());
         admin.getRoles().add(ROLES.MANAGER.toString());
         repository.save(admin);
+    }
+
+
+    private void initManager() {
+
+        Optional<Customer> managerOptional = repository.findByUsername("manager");
+        if (managerOptional.isPresent()) {
+            return;
+        }
+        Customer manager = new Customer();
+        manager.setUsername("manager");
+        manager.setPassword("123");
+        manager.setFirstname("Manager");
+        manager.setLastname("DefaultManager");
+        manager.setBalance(0.0);
+
+        manager.getRoles().add(ROLES.MANAGER.toString());
+        manager.getRoles().add(ROLES.CUSTOMER.toString());
+        repository.save(manager);
     }
 
     public void add(Customer customer) {
@@ -90,7 +111,6 @@ public class CustomerService {
         return repository.findByUsername(username).isPresent();
     }
 
-
     // Метод удаления покупателя по id
     public void deleteCustomer(Long customerId) {
         repository.deleteById(customerId);
@@ -100,7 +120,7 @@ public class CustomerService {
         // Если текущий пользователь не администратор, то он может менять пароль только для своего аккаунта
         if (!currentUserHasRole(ROLES.ADMINISTRATOR)) {
             if (currentCustomer == null || !currentCustomer.getId().equals(userId)) {
-                throw new SecurityException("У вас нет прав для изменения пароля другого пользователя.");
+
             }
         }
         // Находим пользователя по ID

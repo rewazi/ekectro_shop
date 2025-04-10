@@ -58,7 +58,7 @@ public class SupplierListController implements Initializable {
     @FXML
     private void editSelectedSupplier() {
         if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
-            showAccessDeniedAlert("У вас нет прав для редактирования поставщика.");
+
             return;
         }
         Supplier selectedSupplier = tvSupplierList.getSelectionModel().getSelectedItem();
@@ -71,16 +71,13 @@ public class SupplierListController implements Initializable {
 
     private void showAccessDeniedAlert(String message) {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
-        alert.setTitle("Ошибка доступа");
-        alert.setHeaderText("Редактирование запрещено");
-        alert.setContentText(message);
-        alert.showAndWait();
+
     }
 
     @FXML
     private void deleteSelectedSupplier() {
         if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
-            showAccessDeniedAlert("Нельзя вам это делать!");
+
             return;
         }
         Supplier selectedSupplier = tvSupplierList.getSelectionModel().getSelectedItem();

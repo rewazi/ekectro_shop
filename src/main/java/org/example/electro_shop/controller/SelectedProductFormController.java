@@ -42,9 +42,7 @@ public class SelectedProductFormController {
         this.customerService = customerService;
     }
 
-    /**
-     * Метод вызывается извне (FormService), чтобы передать выбранное оборудование.
-     */
+
     public void setEquipment(Product product) {
         this.selectedProduct = product;
         if (product != null) {
@@ -65,11 +63,5 @@ public class SelectedProductFormController {
     }
 
 
-    private void showAccessDeniedAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Доступ запрещён");
-        alert.setHeaderText("Недостаточно прав");
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
 }

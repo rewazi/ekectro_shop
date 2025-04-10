@@ -10,9 +10,9 @@
       fx:controller="org.example.electro_shop.controller.SelectedProductFormController"
       spacing="10" alignment="CENTER" style="-fx-padding: 20;">
 
-    <Label text="Информация об оборудовании" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+    <Label text="Информация об продукте" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
 
-    <!-- При желании можно хранить изображение оборудования -->
+
     <ImageView fx:id="equipmentImageView" fitWidth="200" preserveRatio="true"/>
 
     <Label text="Название:" style="-fx-font-weight: bold;"/>

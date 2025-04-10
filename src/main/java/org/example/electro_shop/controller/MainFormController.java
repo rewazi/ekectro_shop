@@ -64,7 +64,7 @@ public class MainFormController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Ошибка доступа");
             alert.setHeaderText("Редактирование запрещено");
-            alert.setContentText("У вас нет прав для редактирования оборудования.");
+            alert.setContentText("У вас нет прав для редактирования продукта.");
             alert.showAndWait();
             return;
         }
@@ -72,7 +72,7 @@ public class MainFormController implements Initializable {
         if (selectedProduct != null) {
             formService.loadEditEquipmentForm(selectedProduct);
         } else {
-            System.out.println("Оборудование не выбрано!");
+            System.out.println("продукт не выбрано!");
         }
     }
 
@@ -82,7 +82,7 @@ public class MainFormController implements Initializable {
         if (selectedProduct != null) {
             formService.loadSelectedEquipmentForm(selectedProduct);
         } else {
-            System.out.println("Оборудование не выбрано!");
+            System.out.println("продукт не выбрано!");
         }
     }
 
@@ -90,10 +90,7 @@ public class MainFormController implements Initializable {
     private void deleteSelectedEquipment() {
         if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Ошибка доступа");
-            alert.setHeaderText("Удаление запрещено");
-            alert.setContentText("У вас нет прав для удаления оборудования.");
-            alert.showAndWait();
+
             return;
         }
         Product selectedProduct = tvEquipmentList.getSelectionModel().getSelectedItem();
@@ -108,7 +105,7 @@ public class MainFormController implements Initializable {
         // Добавляем меню в начало главного окна
         vbMainFormRoot.getChildren().addFirst(formService.loadMenuForm());
 
-        // Заполняем таблицу оборудованием
+
         tvEquipmentList.setItems(productService.getAllEquipment());
 
         // Настраиваем колонки таблицы

@@ -69,10 +69,7 @@ public class SupplierFormController implements Initializable {
                 CustomerService.ROLES.MANAGER,
                 CustomerService.ROLES.ADMINISTRATOR)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Доступ запрещён");
-            alert.setHeaderText("Недостаточно прав");
-            alert.setContentText("У вас нет прав на добавление поставщиков!");
-            alert.showAndWait();
+
 
 
             formService.loadMainForm();

@@ -24,7 +24,8 @@
 
         <HBox spacing="10">
             <children>
-                <Button text="Редактировать" onAction="#editSelectedEquipment"/>
+                <!-- Добавляем fx:id для кнопки редактирования -->
+                <Button fx:id="editEquipmentButton" text="Редактировать" onAction="#editSelectedEquipment"/>
                 <Button fx:id="deleteEquipmentButton" text="Удалить" onAction="#deleteSelectedEquipment"/>
                 <Button text="Главная" onAction="#goToMainForm"/>
             </children>

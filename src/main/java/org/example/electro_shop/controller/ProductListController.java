@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -28,19 +29,18 @@ public class ProductListController implements Initializable {
 
     @FXML
     private TableColumn<Product, String> tcId;
-
     @FXML
     private TableColumn<Product, String> tcName;
-
     @FXML
     private TableColumn<Product, String> tcPrice;
-
     @FXML
     private TableColumn<Product, String> tcQuantity;
-
     @FXML
     private TableColumn<Product, String> tcStock;
 
+    // Кнопки редактирования и удаления
+    @FXML
+    private Button editEquipmentButton;
     @FXML
     private Button deleteEquipmentButton;
 
@@ -51,7 +51,7 @@ public class ProductListController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        // Заполняем таблицу данными
         tcId.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getId().toString()));
         tcName.setCellValueFactory(cellData ->
@@ -63,9 +63,14 @@ public class ProductListController implements Initializable {
         tcStock.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getStock())));
 
-
         List<Product> productList = productService.getAllEquipment();
         tvEquipment.setItems(FXCollections.observableArrayList(productList));
+
+        // Скрываем кнопки "Редактировать" и "Удалить", если пользователь не администратор
+        if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
+            editEquipmentButton.setVisible(false);
+            deleteEquipmentButton.setVisible(false);
+        }
     }
 
     @FXML
@@ -76,29 +81,26 @@ public class ProductListController implements Initializable {
     @FXML
     private void editSelectedEquipment() {
         if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
-            showAccessDeniedAlert("У вас нет прав для редактирования продуктов.");
+
             return;
         }
         Product selected = tvEquipment.getSelectionModel().getSelectedItem();
         if (selected != null) {
             formService.loadEditEquipmentForm(selected);
         } else {
-            System.out.println("продукт не выбрано!");
+            System.out.println("Продукт не выбран!");
         }
     }
 
     private void showAccessDeniedAlert(String message) {
-        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
-        alert.setTitle("Ошибка доступа");
-        alert.setHeaderText("Редактирование запрещено");
-        alert.setContentText(message);
-        alert.showAndWait();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+
     }
 
     @FXML
     private void deleteSelectedEquipment() {
         if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
-            showAccessDeniedAlert("Нельзя вам это делать!");
+
             return;
         }
         Product selected = tvEquipment.getSelectionModel().getSelectedItem();
@@ -109,5 +111,4 @@ public class ProductListController implements Initializable {
             showAccessDeniedAlert("Продукт не выбран!");
         }
     }
-
 }

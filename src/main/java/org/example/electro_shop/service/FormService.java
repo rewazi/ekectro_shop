@@ -147,7 +147,7 @@ public class FormService {
             controller.setEquipment(selectedProduct);
 
             Stage stage = new Stage();
-            stage.setTitle("Информация об оборудовании");
+            stage.setTitle("Информация об продукте");
             stage.setScene(new Scene(selectedEquipmentFormRoot));
             stage.setResizable(false);
             stage.show();
@@ -216,7 +216,7 @@ public class FormService {
         }
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
-        getPrimaryStage().setTitle("Список оборудования");
+        getPrimaryStage().setTitle("Список продуктов");
         getPrimaryStage().centerOnScreen();
         getPrimaryStage().show();
     }

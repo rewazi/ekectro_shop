@@ -35,7 +35,7 @@ public class EditCustomerFormController {
         this.customer = customer;
 
         if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
-            showError("У вас нет прав на редактирование покупателя!");
+
             formService.loadCustomerListForm();
             return;
         }

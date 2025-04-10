@@ -23,7 +23,7 @@
 
         <TableView fx:id="tvRating" prefWidth="600" prefHeight="300">
             <columns>
-                <TableColumn fx:id="tcEquipment" text="Оборудование" prefWidth="300"/>
+                <TableColumn fx:id="tcEquipment" text="Продукты" prefWidth="300"/>
                 <TableColumn fx:id="tcTotalSold" text="Количество проданного" prefWidth="300"/>
             </columns>
         </TableView>
