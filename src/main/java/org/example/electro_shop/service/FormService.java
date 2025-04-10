@@ -2,11 +2,11 @@ package org.example.electro_shop.service;
 
 import org.example.electro_shop.ElectroStoreApplication;
 import org.example.electro_shop.controller.EditCustomerFormController;
-import org.example.electro_shop.controller.EditEquipmentFormController;
+import org.example.electro_shop.controller.EditProductFormController;
 import org.example.electro_shop.controller.EditSupplierFormController;
-import org.example.electro_shop.controller.SelectedEquipmentFormController;
+import org.example.electro_shop.controller.SelectedProductFormController;
 import org.example.electro_shop.model.entity.Customer;
-import org.example.electro_shop.model.entity.Equipment;
+import org.example.electro_shop.model.entity.Product;
 import org.example.electro_shop.model.entity.Supplier;
 import org.example.electro_shop.tools.SpringFXMLLoader;
 import javafx.fxml.FXMLLoader;
@@ -60,7 +60,7 @@ public class FormService {
     }
 
     public void loadNewEquipmentForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/equipment/newEquipmentForm.fxml");
+        FXMLLoader fxmlLoader = springFXMLLoader.load("/product/newEquipmentForm.fxml");
         Parent root;
         try {
             root = fxmlLoader.load();
@@ -69,17 +69,17 @@ public class FormService {
         }
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
-        getPrimaryStage().setTitle("Создание нового оборудования");
+        getPrimaryStage().setTitle("Создание нового продукта");
     }
 
-    public void loadEditEquipmentForm(Equipment selectedEquipment) {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/equipment/editEquipmentForm.fxml");
+    public void loadEditEquipmentForm(Product selectedProduct) {
+        FXMLLoader fxmlLoader = springFXMLLoader.load("/product/editProductForm.fxml");
         try {
             Parent editEquipmentFormRoot = fxmlLoader.load();
-            EditEquipmentFormController controller = fxmlLoader.getController();
-            controller.setEditEquipment(selectedEquipment);
+            EditProductFormController controller = fxmlLoader.getController();
+            controller.setEditEquipment(selectedProduct);
             Scene scene = new Scene(editEquipmentFormRoot);
-            getPrimaryStage().setTitle("ElectroStore - Редактирование оборудования");
+            getPrimaryStage().setTitle("ElectroStore - Редактирование продукта");
             getPrimaryStage().setScene(scene);
             getPrimaryStage().setResizable(false);
             getPrimaryStage().centerOnScreen();
@@ -139,12 +139,12 @@ public class FormService {
         getPrimaryStage().setTitle("Регистрация нового пользователя");
     }
 
-    public void loadSelectedEquipmentForm(Equipment selectedEquipment) {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/equipment/selectedEquipmentForm.fxml");
+    public void loadSelectedEquipmentForm(Product selectedProduct) {
+        FXMLLoader fxmlLoader = springFXMLLoader.load("/product/selectedProductForm.fxml");
         try {
             Parent selectedEquipmentFormRoot = fxmlLoader.load();
-            SelectedEquipmentFormController controller = fxmlLoader.getController();
-            controller.setEquipment(selectedEquipment);
+            SelectedProductFormController controller = fxmlLoader.getController();
+            controller.setEquipment(selectedProduct);
 
             Stage stage = new Stage();
             stage.setTitle("Информация об оборудовании");
@@ -207,7 +207,7 @@ public class FormService {
     }
 
     public void loadEquipmentListForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/equipment/equipmentList.fxml");
+        FXMLLoader fxmlLoader = springFXMLLoader.load("/product/ProductList.fxml");
         Parent root;
         try {
             root = fxmlLoader.load();

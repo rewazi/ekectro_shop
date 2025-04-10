@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+      xmlns="http://javafx.com/javafx/23.0.2"
+      fx:controller="org.example.electro_shop.controller.SelectedProductFormController"
+      spacing="10" alignment="CENTER" style="-fx-padding: 20;">
+
+    <Label text="Информация об оборудовании" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+    <!-- При желании можно хранить изображение оборудования -->
+    <ImageView fx:id="equipmentImageView" fitWidth="200" preserveRatio="true"/>
+
+    <Label text="Название:" style="-fx-font-weight: bold;"/>
+    <Label fx:id="nameLabel"/>
+
+    <Label text="Поставщики:" style="-fx-font-weight: bold;"/>
+    <Label fx:id="suppliersLabel"/>
+
+    <Label text="Цена:" style="-fx-font-weight: bold;"/>
+    <Label fx:id="priceLabel"/>
+
+    <Label text="Всего:" style="-fx-font-weight: bold;"/>
+    <Label fx:id="quantityLabel"/>
+
+    <Label text="В наличии:" style="-fx-font-weight: bold;"/>
+    <Label fx:id="stockLabel"/>
+
+
+
+</VBox>

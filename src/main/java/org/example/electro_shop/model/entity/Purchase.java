@@ -11,7 +11,7 @@ public class Purchase {
     private Long id;
 
     @ManyToOne
-    private Equipment equipment;
+    private Product product;
 
     @ManyToOne
     private Customer customer;
@@ -22,8 +22,8 @@ public class Purchase {
 
     public Purchase() {}
 
-    public Purchase(Equipment equipment, Customer customer, int quantity, double totalPrice, LocalDateTime purchaseDate) {
-        this.equipment = equipment;
+    public Purchase(Product product, Customer customer, int quantity, double totalPrice, LocalDateTime purchaseDate) {
+        this.product = product;
         this.customer = customer;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
@@ -40,12 +40,12 @@ public class Purchase {
         this.id = id;
     }
 
-    public Equipment getEquipment() {
-        return equipment;
+    public Product getEquipment() {
+        return product;
     }
 
-    public void setEquipment(Equipment equipment) {
-        this.equipment = equipment;
+    public void setEquipment(Product product) {
+        this.product = product;
     }
 
     public Customer getCustomer() {

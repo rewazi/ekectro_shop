@@ -12,10 +12,10 @@
     <children>
         <MenuBar>
             <menus>
-                <Menu text="Оборудование">
+                <Menu text="продукты">
                     <items>
-                        <MenuItem onAction="#showEquipmentForm" text="Добавить оборудование" />
-                        <MenuItem onAction="#showEquipmentList" text="Список оборудования" />
+                        <MenuItem onAction="#showEquipmentForm" text="Добавить продукты" />
+                        <MenuItem onAction="#showEquipmentList" text="Список продукты" />
                     </items>
                 </Menu>
                 <Menu text="Поставщики">

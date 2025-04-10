@@ -8,9 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import org.example.electro_shop.model.entity.Customer;
-import org.example.electro_shop.model.entity.Equipment;
+import org.example.electro_shop.model.entity.Product;
 import org.example.electro_shop.service.CustomerService;
-import org.example.electro_shop.service.EquipmentService;
+import org.example.electro_shop.service.ProductService;
 import org.example.electro_shop.service.FormService;
 import org.example.electro_shop.service.PurchaseService;
 import org.springframework.stereotype.Component;
@@ -24,12 +24,12 @@ public class PurchaseFormController implements Initializable {
     private final PurchaseService purchaseService;
     private final FormService formService;
     private final CustomerService customerService;
-    private final EquipmentService equipmentService;
+    private final ProductService productService;
 
     @FXML
     private ComboBox<Customer> cbCustomer;
     @FXML
-    private ComboBox<Equipment> cbEquipment;
+    private ComboBox<Product> cbEquipment;
     @FXML
     private TextField tfQuantity;
     @FXML
@@ -39,18 +39,18 @@ public class PurchaseFormController implements Initializable {
     public PurchaseFormController(PurchaseService purchaseService,
                                   FormService formService,
                                   CustomerService customerService,
-                                  EquipmentService equipmentService) {
+                                  ProductService productService) {
         this.purchaseService = purchaseService;
         this.formService = formService;
         this.customerService = customerService;
-        this.equipmentService = equipmentService;
+        this.productService = productService;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         cbCustomer.setItems(FXCollections.observableArrayList(customerService.getAllCustomers()));
-        cbEquipment.setItems(FXCollections.observableArrayList(equipmentService.getAllEquipment()));
+        cbEquipment.setItems(FXCollections.observableArrayList(productService.getAllEquipment()));
 
 
         cbCustomer.setCellFactory(listView -> new ListCell<Customer>() {
@@ -89,20 +89,20 @@ public class PurchaseFormController implements Initializable {
     private void handlePurchase() {
         try {
             Customer customer = cbCustomer.getSelectionModel().getSelectedItem();
-            Equipment equipment = cbEquipment.getSelectionModel().getSelectedItem();
+            Product product = cbEquipment.getSelectionModel().getSelectedItem();
             int quantity = Integer.parseInt(tfQuantity.getText().trim());
 
-            if (customer == null || equipment == null) {
+            if (customer == null || product == null) {
                 lblPurchaseResult.setText("Выберите покупателя и товар!");
                 return;
             }
 
-            if (equipment.getStock() < quantity) {
+            if (product.getStock() < quantity) {
                 lblPurchaseResult.setText("Недостаточно товара в наличии!");
                 return;
             }
 
-            String result = purchaseService.buyEquipment(customer.getId(), equipment.getId(), quantity);
+            String result = purchaseService.buyEquipment(customer.getId(), product.getId(), quantity);
             lblPurchaseResult.setText(result);
         } catch (NumberFormatException e) {
             lblPurchaseResult.setText("Неверный формат количества!");

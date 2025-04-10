@@ -1,7 +1,7 @@
 package org.example.electro_shop.service;
 
 import org.example.electro_shop.model.entity.Customer;
-import org.example.electro_shop.model.entity.Equipment;
+import org.example.electro_shop.model.entity.Product;
 import org.example.electro_shop.model.entity.Purchase;
 import org.example.electro_shop.model.repository.PurchaseRepository;
 import org.springframework.stereotype.Service;
@@ -14,41 +14,41 @@ import java.util.List;
 @Service
 public class PurchaseService {
     private final PurchaseRepository purchaseRepository;
-    private final EquipmentService equipmentService;
+    private final ProductService productService;
     private final CustomerService customerService;
 
     public PurchaseService(PurchaseRepository purchaseRepository,
-                           EquipmentService equipmentService,
+                           ProductService productService,
                            CustomerService customerService) {
         this.purchaseRepository = purchaseRepository;
-        this.equipmentService = equipmentService;
+        this.productService = productService;
         this.customerService = customerService;
     }
 
 
     public String buyEquipment(Long customerId, Long equipmentId, int quantity) {
         Customer customer = customerService.findById(customerId).orElse(null);
-        Equipment equipment = equipmentService.findById(equipmentId);
+        Product product = productService.findById(equipmentId);
         if (customer == null) {
             return "Покупатель не найден!";
         }
-        if (equipment == null) {
+        if (product == null) {
             return "Товар не найден!";
         }
-        if (equipment.getQuantity() < quantity) {
+        if (product.getQuantity() < quantity) {
             return "Недостаточно товара на складе!";
         }
-        double totalPrice = equipment.getPrice() * quantity;
+        double totalPrice = product.getPrice() * quantity;
         if (customer.getBalance() < totalPrice) {
             return "Недостаточно средств у покупателя!";
         }
 
         customer.setBalance(customer.getBalance() - totalPrice);
-        equipment.setStock(equipment.getStock() - quantity);
+        product.setStock(product.getStock() - quantity);
         customerService.update(customer);
-        equipmentService.update(equipment);
+        productService.update(product);
 
-        Purchase purchase = new Purchase(equipment, customer, quantity, totalPrice, LocalDateTime.now());
+        Purchase purchase = new Purchase(product, customer, quantity, totalPrice, LocalDateTime.now());
         purchaseRepository.save(purchase);
         return "Покупка успешно выполнена!";
     }

@@ -9,16 +9,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vbEditEquipmentRoot" prefHeight="379.0" prefWidth="628.0"
+<VBox fx:id="vbNewEquipmentRoot" prefHeight="379.0" prefWidth="628.0"
       xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.electro_shop.controller.EditProductFormController">
+      fx:controller="org.example.electro_shop.controller.NewProductFormController">
 
     <children>
-        <Label alignment="CENTER" prefHeight="89.0" prefWidth="600.0" text="Изменение атрибутов продукта">
+        <Label alignment="CENTER" prefHeight="89.0" prefWidth="600.0" text="Новый продукт">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
+
         <!-- Название -->
         <HBox prefHeight="28.0" prefWidth="600.0">
             <children>
@@ -28,8 +29,6 @@
                     </HBox.margin>
                 </Label>
                 <TextField fx:id="tfName" prefHeight="25.0" prefWidth="308.0" />
-                <!-- Скрытое поле ID -->
-                <TextField fx:id="tfId" prefHeight="25.0" prefWidth="0.0" visible="false" />
             </children>
         </HBox>
 
@@ -58,33 +57,21 @@
         </HBox>
 
         <!-- Количество -->
-        <HBox prefHeight="28.0" prefWidth="600.0">
+        <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="600.0">
             <children>
                 <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="161.0" text="Количество">
                     <HBox.margin>
                         <Insets right="10.0" />
                     </HBox.margin>
                 </Label>
-                <TextField fx:id="tfQuantity" prefHeight="25.0" prefWidth="118.0" />
-            </children>
-        </HBox>
-
-        <!-- В наличии (stock) -->
-        <HBox prefHeight="28.0" prefWidth="600.0">
-            <children>
-                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="161.0" text="В наличии">
-                    <HBox.margin>
-                        <Insets right="10.0" />
-                    </HBox.margin>
-                </Label>
-                <TextField fx:id="tfStock" prefHeight="25.0" prefWidth="76.0" />
+                <TextField fx:id="tfQuantity" prefHeight="25.0" prefWidth="76.0" />
             </children>
         </HBox>
 
         <!-- Кнопки -->
         <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="600.0" spacing="5.0">
             <children>
-                <Button mnemonicParsing="false" onAction="#goEdit" prefHeight="25.0" prefWidth="125.0" text="Изменить" />
+                <Button mnemonicParsing="false" onAction="#create" prefHeight="25.0" prefWidth="125.0" text="Добавить" />
                 <Button mnemonicParsing="false" onAction="#goToMainForm" text="Возврат на главную" />
             </children>
         </HBox>

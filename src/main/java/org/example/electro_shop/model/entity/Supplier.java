@@ -20,7 +20,7 @@ public class Supplier implements Serializable {
 
     @ManyToMany(mappedBy = "suppliers",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<Equipment> equipments = new HashSet<>();
+    private Set<Product> products = new HashSet<>();
 
     public Supplier() {}
 
@@ -48,12 +48,12 @@ public class Supplier implements Serializable {
         this.contact = contact;
     }
 
-    public Set<Equipment> getEquipments() {
-        return equipments;
+    public Set<Product> getEquipments() {
+        return products;
     }
 
-    public void setEquipments(Set<Equipment> equipments) {
-        this.equipments = equipments;
+    public void setEquipments(Set<Product> products) {
+        this.products = products;
     }
 
     @Override

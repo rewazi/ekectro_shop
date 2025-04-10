@@ -5,7 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.example.electro_shop.model.entity.Equipment;
+import org.example.electro_shop.model.entity.Product;
 import org.example.electro_shop.service.FormService;
 import org.example.electro_shop.service.PurchaseService;
 import org.springframework.stereotype.Component;
@@ -102,7 +102,7 @@ public class RatingFormController {
 
         for (Object[] row : results) {
 
-            String equipmentName = ((Equipment) row[0]).getName();
+            String equipmentName = ((Product) row[0]).getName();
             int totalSold = ((Number) row[1]).intValue();
             ratings.add(new EquipmentRating(equipmentName, totalSold));
         }

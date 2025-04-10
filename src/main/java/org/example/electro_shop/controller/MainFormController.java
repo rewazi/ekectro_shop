@@ -10,9 +10,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.example.electro_shop.model.entity.Equipment;
+import org.example.electro_shop.model.entity.Product;
 import org.example.electro_shop.service.CustomerService;
-import org.example.electro_shop.service.EquipmentService;
+import org.example.electro_shop.service.ProductService;
 import org.example.electro_shop.service.FormService;
 import org.springframework.stereotype.Component;
 
@@ -24,38 +24,38 @@ import java.util.stream.Collectors;
 public class MainFormController implements Initializable {
 
     private final FormService formService;
-    private final EquipmentService equipmentService;
+    private final ProductService productService;
 
     @FXML
     private VBox vbMainFormRoot;
 
     @FXML
-    private TableView<Equipment> tvEquipmentList;
+    private TableView<Product> tvEquipmentList;
 
     @FXML
-    private TableColumn<Equipment, String> tcId;
+    private TableColumn<Product, String> tcId;
 
     @FXML
-    private TableColumn<Equipment, String> tcName;
+    private TableColumn<Product, String> tcName;
 
     @FXML
-    private TableColumn<Equipment, String> tcSuppliers;
+    private TableColumn<Product, String> tcSuppliers;
 
     @FXML
-    private TableColumn<Equipment, String> tcPrice;
+    private TableColumn<Product, String> tcPrice;
 
     @FXML
-    private TableColumn<Equipment, String> tcQuantity;
+    private TableColumn<Product, String> tcQuantity;
 
     @FXML
-    private TableColumn<Equipment, String> tcStock;
+    private TableColumn<Product, String> tcStock;
 
     @FXML
     private HBox hbEditEquipment;
 
-    public MainFormController(FormService formService, EquipmentService equipmentService) {
+    public MainFormController(FormService formService, ProductService productService) {
         this.formService = formService;
-        this.equipmentService = equipmentService;
+        this.productService = productService;
     }
 
     @FXML
@@ -68,9 +68,9 @@ public class MainFormController implements Initializable {
             alert.showAndWait();
             return;
         }
-        Equipment selectedEquipment = tvEquipmentList.getSelectionModel().getSelectedItem();
-        if (selectedEquipment != null) {
-            formService.loadEditEquipmentForm(selectedEquipment);
+        Product selectedProduct = tvEquipmentList.getSelectionModel().getSelectedItem();
+        if (selectedProduct != null) {
+            formService.loadEditEquipmentForm(selectedProduct);
         } else {
             System.out.println("Оборудование не выбрано!");
         }
@@ -78,9 +78,9 @@ public class MainFormController implements Initializable {
 
     @FXML
     private void showSelectedEquipmentForm() {
-        Equipment selectedEquipment = tvEquipmentList.getSelectionModel().getSelectedItem();
-        if (selectedEquipment != null) {
-            formService.loadSelectedEquipmentForm(selectedEquipment);
+        Product selectedProduct = tvEquipmentList.getSelectionModel().getSelectedItem();
+        if (selectedProduct != null) {
+            formService.loadSelectedEquipmentForm(selectedProduct);
         } else {
             System.out.println("Оборудование не выбрано!");
         }
@@ -96,10 +96,10 @@ public class MainFormController implements Initializable {
             alert.showAndWait();
             return;
         }
-        Equipment selectedEquipment = tvEquipmentList.getSelectionModel().getSelectedItem();
-        if (selectedEquipment != null) {
-            equipmentService.delete(selectedEquipment.getId());
-            tvEquipmentList.setItems(equipmentService.getAllEquipment());
+        Product selectedProduct = tvEquipmentList.getSelectionModel().getSelectedItem();
+        if (selectedProduct != null) {
+            productService.delete(selectedProduct.getId());
+            tvEquipmentList.setItems(productService.getAllEquipment());
         }
     }
 
@@ -109,7 +109,7 @@ public class MainFormController implements Initializable {
         vbMainFormRoot.getChildren().addFirst(formService.loadMenuForm());
 
         // Заполняем таблицу оборудованием
-        tvEquipmentList.setItems(equipmentService.getAllEquipment());
+        tvEquipmentList.setItems(productService.getAllEquipment());
 
         // Настраиваем колонки таблицы
         tcId.setCellValueFactory(cellData ->
@@ -117,11 +117,11 @@ public class MainFormController implements Initializable {
         tcName.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getName()));
         tcSuppliers.setCellValueFactory(cellData -> {
-            Equipment equipment = cellData.getValue();
-            if (equipment.getSuppliers() == null || equipment.getSuppliers().isEmpty()) {
+            Product product = cellData.getValue();
+            if (product.getSuppliers() == null || product.getSuppliers().isEmpty()) {
                 return new SimpleStringProperty("");
             }
-            String suppliers = equipment.getSuppliers().stream()
+            String suppliers = product.getSuppliers().stream()
                     .map(supplier -> supplier.getName())
                     .collect(Collectors.joining(", "));
             return new SimpleStringProperty(suppliers);
@@ -134,9 +134,9 @@ public class MainFormController implements Initializable {
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getStock())));
 
         // При выборе строки отображаем панель редактирования
-        tvEquipmentList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Equipment>() {
+        tvEquipmentList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
             @Override
-            public void changed(ObservableValue<? extends Equipment> observable, Equipment oldValue, Equipment newValue) {
+            public void changed(ObservableValue<? extends Product> observable, Product oldValue, Product newValue) {
                 hbEditEquipment.setVisible(newValue != null);
             }
         });
@@ -144,9 +144,9 @@ public class MainFormController implements Initializable {
         // Обработчик двойного клика: при двойном клике по строке открывается подробная информация
         tvEquipmentList.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                Equipment selectedEquipment = tvEquipmentList.getSelectionModel().getSelectedItem();
-                if (selectedEquipment != null) {
-                    formService.loadSelectedEquipmentForm(selectedEquipment);
+                Product selectedProduct = tvEquipmentList.getSelectionModel().getSelectedItem();
+                if (selectedProduct != null) {
+                    formService.loadSelectedEquipmentForm(selectedProduct);
                 }
             }
         });

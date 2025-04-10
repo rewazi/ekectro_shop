@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/23.0.2"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.electro_shop.controller.ProductListController"
+      prefWidth="600" prefHeight="400" spacing="10" style="-fx-padding: 10;">
+
+    <children>
+        <TableView fx:id="tvEquipment" prefHeight="350.0" prefWidth="600.0">
+            <columns>
+                <TableColumn fx:id="tcId" prefWidth="50.0" text="Id" />
+                <TableColumn fx:id="tcName" prefWidth="150.0" text="Название" />
+                <TableColumn fx:id="tcPrice" prefWidth="80.0" text="Цена" />
+                <TableColumn fx:id="tcQuantity" prefWidth="80.0" text="Кол-во" />
+                <TableColumn fx:id="tcStock" prefWidth="80.0" text="В наличии" />
+            </columns>
+        </TableView>
+
+        <HBox spacing="10">
+            <children>
+                <Button text="Редактировать" onAction="#editSelectedEquipment"/>
+                <Button fx:id="deleteEquipmentButton" text="Удалить" onAction="#deleteSelectedEquipment"/>
+                <Button text="Главная" onAction="#goToMainForm"/>
+            </children>
+        </HBox>
+    </children>
+</VBox>
