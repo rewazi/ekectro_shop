@@ -57,7 +57,7 @@ public class SupplierListController implements Initializable {
 
     @FXML
     private void editSelectedSupplier() {
-        if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
+        if (!CustomerService.currentUserHasAnyRole(CustomerService.ROLES.ADMINISTRATOR,CustomerService.ROLES.MANAGER)) {
 
             return;
         }
@@ -76,7 +76,7 @@ public class SupplierListController implements Initializable {
 
     @FXML
     private void deleteSelectedSupplier() {
-        if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
+        if (!CustomerService.currentUserHasAnyRole(CustomerService.ROLES.ADMINISTRATOR,CustomerService.ROLES.MANAGER)) {
 
             return;
         }

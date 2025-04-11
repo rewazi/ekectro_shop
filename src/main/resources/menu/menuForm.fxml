@@ -12,24 +12,24 @@
     <children>
         <MenuBar>
             <menus>
-                <!-- Меню "продукты" (всегда видно), но кнопка "Добавить продукты" скрывается, если пользователь не админ -->
+
                 <Menu fx:id="menuProducts" text="продукты">
                     <items>
                         <MenuItem fx:id="menuItemAddProduct" onAction="#showEquipmentForm" text="Добавить продукты" />
                         <MenuItem onAction="#showEquipmentList" text="Список продукты" />
                     </items>
                 </Menu>
-                <!-- Меню "Поставщики" скрывается для обычного пользователя -->
+
                 <Menu fx:id="menuSuppliers" text="Поставщики">
                     <items>
                         <MenuItem onAction="#showSupplierForm" text="Добавить поставщика" />
                         <MenuItem onAction="#showSupplierList" text="Список поставщиков" />
                     </items>
                 </Menu>
-                <!-- Меню "Покупатели" скрывается для обычного пользователя -->
+
                 <Menu fx:id="menuCustomers" text="Покупатели">
                     <items>
-                        <MenuItem onAction="#showNewCustomerForm" text="Добавить покупателя" />
+                        <MenuItem fx:id="menuItemCustomers" onAction="#showNewCustomerForm" text="Добавить покупателя" />
                         <MenuItem onAction="#showCustomerListForm" text="Список покупателей" />
                     </items>
                 </Menu>
@@ -44,7 +44,7 @@
 
                 <Menu fx:id="menuAdministrator" text="Administrator">
                     <items>
-                        <MenuItem onAction="#someAdminFunction" text="Админ. функция" />
+                        <MenuItem fx:id="menuItemAdminFunction" onAction="#someAdminFunction" text="Админ. функция" />
                     </items>
                 </Menu>
 

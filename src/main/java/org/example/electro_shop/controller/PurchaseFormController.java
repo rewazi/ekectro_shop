@@ -27,14 +27,11 @@ public class PurchaseFormController implements Initializable {
     private final ProductService productService;
 
     @FXML
-    private ComboBox<Customer> cbCustomer;
-    @FXML
     private ComboBox<Product> cbEquipment;
     @FXML
     private TextField tfQuantity;
     @FXML
     private Label lblPurchaseResult;
-
 
     public PurchaseFormController(PurchaseService purchaseService,
                                   FormService formService,
@@ -49,37 +46,29 @@ public class PurchaseFormController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        cbCustomer.setItems(FXCollections.observableArrayList(customerService.getAllCustomers()));
+
         cbEquipment.setItems(FXCollections.observableArrayList(productService.getAllEquipment()));
 
 
-        cbCustomer.setCellFactory(listView -> new ListCell<Customer>() {
+        cbEquipment.setCellFactory(listView -> new ListCell<Product>() {
             @Override
-            protected void updateItem(Customer item, boolean empty) {
+            protected void updateItem(Product item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    setText("ID: " + item.getId()
-                            + ", Логин: " + item.getUsername()
-                            + ", Имя: " + item.getFirstname()
-                            + ", Фамилия: " + item.getLastname()
-                            + ", Баланс: " + item.getBalance());
+                    setText(item.getName() + " - " + item.getPrice() + " евро.");
                 }
             }
         });
-        cbCustomer.setButtonCell(new ListCell<Customer>() {
+        cbEquipment.setButtonCell(new ListCell<Product>() {
             @Override
-            protected void updateItem(Customer item, boolean empty) {
+            protected void updateItem(Product item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    setText("ID: " + item.getId()
-                            + ", Логин: " + item.getUsername()
-                            + ", Имя: " + item.getFirstname()
-                            + ", Фамилия: " + item.getLastname()
-                            + ", Баланс: " + item.getBalance());
+                    setText(item.getName() + " - " + item.getPrice() + " евро.");
                 }
             }
         });
@@ -88,19 +77,23 @@ public class PurchaseFormController implements Initializable {
     @FXML
     private void handlePurchase() {
         try {
-            Customer customer = cbCustomer.getSelectionModel().getSelectedItem();
+
+            Customer customer = customerService.currentCustomer;
             Product product = cbEquipment.getSelectionModel().getSelectedItem();
             int quantity = Integer.parseInt(tfQuantity.getText().trim());
 
-            if (customer == null || product == null) {
-                lblPurchaseResult.setText("Выберите покупателя и товар!");
+
+            if (product == null) {
+                lblPurchaseResult.setText("Выберите товар!");
                 return;
             }
+
 
             if (product.getStock() < quantity) {
                 lblPurchaseResult.setText("Недостаточно товара в наличии!");
                 return;
             }
+
 
             String result = purchaseService.buyEquipment(customer.getId(), product.getId(), quantity);
             lblPurchaseResult.setText(result);

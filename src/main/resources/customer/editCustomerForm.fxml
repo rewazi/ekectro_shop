@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <VBox xmlns:fx="http://javafx.com/fxml/1"
       xmlns="http://javafx.com/javafx/23.0.2"
       fx:controller="org.example.electro_shop.controller.EditCustomerFormController"
@@ -23,6 +26,17 @@
 
     <Label text="Баланс:" style="-fx-font-weight: bold;"/>
     <TextField fx:id="balanceField"/>
+
+    <Label text="Роль:" style="-fx-font-weight: bold;"/>
+    <ComboBox fx:id="roleComboBox">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="CUSTOMER"/>
+                <String fx:value="MANAGER"/>
+                <String fx:value="ADMINISTRATOR"/>
+            </FXCollections>
+        </items>
+    </ComboBox>
 
     <Button text="Сохранить изменения" onAction="#saveCustomer"/>
     <Button text="Отменить" onAction="#cancelEdit"/>

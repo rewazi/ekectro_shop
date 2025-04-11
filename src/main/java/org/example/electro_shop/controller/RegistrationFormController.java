@@ -35,7 +35,7 @@ public class RegistrationFormController {
     @FXML
     private void registration() {
         try {
-            // Проверка, чтобы поля не были пустыми
+
             if (tfUsername.getText().trim().isEmpty() ||
                     pfPassword.getText().trim().isEmpty() ||
                     tfFirstname.getText().trim().isEmpty() ||
@@ -48,7 +48,7 @@ public class RegistrationFormController {
                 return;
             }
 
-            // Проверка на уникальность логина
+
             String username = tfUsername.getText().trim();
             if (customerService.isUsernameTaken(username)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -59,7 +59,7 @@ public class RegistrationFormController {
                 return;
             }
 
-            // Если логин свободен, продолжаем регистрацию
+
             Customer newCustomer = new Customer();
             newCustomer.setFirstname(tfFirstname.getText().trim());
             newCustomer.setLastname(tfLastname.getText().trim());
@@ -68,7 +68,7 @@ public class RegistrationFormController {
             newCustomer.setBalance(0.0);
             newCustomer.getRoles().add(CustomerService.ROLES.CUSTOMER.toString());
 
-            // Сохраняем нового пользователя
+
             customerService.add(newCustomer);
             formService.loadLoginForm();
         } catch (Exception e) {

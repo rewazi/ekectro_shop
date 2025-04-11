@@ -50,7 +50,7 @@ public class NewProductFormController implements Initializable {
         product.setName(tfName.getText());
         product.getSuppliers().addAll(lvSuppliers.getSelectionModel().getSelectedItems());
 
-        // Обработка поля "Цена"
+
         double price;
         try {
             price = Double.parseDouble(tfPrice.getText().trim());
@@ -64,7 +64,7 @@ public class NewProductFormController implements Initializable {
         }
         product.setPrice(price);
 
-        // Обработка поля "Количество"
+
         int quantity;
         try {
             quantity = Integer.parseInt(tfQuantity.getText().trim());

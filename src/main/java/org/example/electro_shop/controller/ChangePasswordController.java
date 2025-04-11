@@ -35,7 +35,7 @@ public class ChangePasswordController {
         if (CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
             List<Customer> allUsers = customerService.getAllCustomers();
             cbUsers.setItems(FXCollections.observableArrayList(allUsers));
-            // Настраиваем отображение элементов ComboBox, показывая только логин
+
             cbUsers.setCellFactory(listView -> new ListCell<>() {
                 @Override
                 protected void updateItem(Customer item, boolean empty) {

@@ -26,7 +26,6 @@ public class MenuFormController implements Initializable {
     @FXML
     private Menu menuUser;
 
-
     @FXML
     private Menu menuSuppliers;
     @FXML
@@ -34,13 +33,17 @@ public class MenuFormController implements Initializable {
     @FXML
     private Menu menuAdministrator;
 
-
     @FXML
     private MenuItem menuItemAddProduct;
     @FXML
     private MenuItem menuItemIncome;
     @FXML
     private MenuItem menuItemRating;
+
+    @FXML
+    private MenuItem menuItemAdminFunction; // Кнопка "Админ. функция"
+    @FXML
+    private MenuItem menuItemCustomers;    // Кнопка "Покупатели"
 
     public MenuFormController(FormService formService, CustomerService customerService) {
         this.formService = formService;
@@ -50,7 +53,9 @@ public class MenuFormController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        if (!customerService.currentUserHasAnyRole(CustomerService.ROLES.ADMINISTRATOR, CustomerService.ROLES.MANAGER)) {
+        // Если текущий пользователь не администратор (и не менеджер), скрываем ненужные элементы
+        if (!customerService.currentUserHasAnyRole(CustomerService.ROLES.ADMINISTRATOR)) {
+            // Скрываем элементы для обычных пользователей и менеджеров
             menuSuppliers.setVisible(false);
             menuCustomers.setVisible(false);
             menuAdministrator.setVisible(false);
@@ -58,12 +63,28 @@ public class MenuFormController implements Initializable {
             menuItemAddProduct.setVisible(false);
             menuItemIncome.setVisible(false);
             menuItemRating.setVisible(false);
+
+            // Скрываем "Админ. функция" и "Покупатели" для менеджеров и пользователей
+            menuItemAdminFunction.setVisible(false);
+            menuItemCustomers.setVisible(false);
+        }
+
+        // Если текущий пользователь — это менеджер, показываем все элементы, кроме "Админ. функция" и "Покупатели"
+        if (customerService.currentUserHasRole(CustomerService.ROLES.MANAGER)) {
+            menuItemAdminFunction.setVisible(false);
+            menuItemCustomers.setVisible(false);
+            menuSuppliers.setVisible(true);
+
+
+
+            menuItemAddProduct.setVisible(true);
+            menuItemIncome.setVisible(true);
+            menuItemRating.setVisible(true);
         }
     }
 
     @FXML
     private void showEquipmentForm() {
-
         if (!customerService.currentUserHasAnyRole(CustomerService.ROLES.MANAGER, CustomerService.ROLES.ADMINISTRATOR)) {
             return;
         }

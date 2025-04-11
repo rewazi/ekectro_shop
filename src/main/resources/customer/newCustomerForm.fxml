@@ -44,7 +44,7 @@
             </children>
         </HBox>
 
-        <!-- Добавлено поле для ввода баланса -->
+
         <HBox spacing="10">
             <children>
                 <Label text="Баланс:"/>

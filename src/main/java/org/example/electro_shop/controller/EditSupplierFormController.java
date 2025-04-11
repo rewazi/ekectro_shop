@@ -33,10 +33,7 @@ public class EditSupplierFormController {
         this.formService = formService;
     }
 
-    /**
-     * Этот метод вызывается из FormService сразу после загрузки FXML.
-     * Заполняем поля формы данными выбранного поставщика.
-     */
+
     public void setEditSupplier(Supplier supplier) {
         this.editSupplier = supplier;
         if (supplier != null) {
@@ -55,7 +52,7 @@ public class EditSupplierFormController {
             return;
         }
 
-        // Если всё ок, продолжаем
+
         editSupplier.setName(tfName.getText());
         editSupplier.setContact(tfContact.getText());
         supplierService.updateSupplier(editSupplier);

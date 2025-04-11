@@ -60,12 +60,9 @@ public class MainFormController implements Initializable {
 
     @FXML
     private void showEditEquipmentForm() {
-        if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
+        if (!CustomerService.currentUserHasAnyRole(CustomerService.ROLES.ADMINISTRATOR,CustomerService.ROLES.MANAGER)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Ошибка доступа");
-            alert.setHeaderText("Редактирование запрещено");
-            alert.setContentText("У вас нет прав для редактирования продукта.");
-            alert.showAndWait();
+
             return;
         }
         Product selectedProduct = tvEquipmentList.getSelectionModel().getSelectedItem();
@@ -88,7 +85,7 @@ public class MainFormController implements Initializable {
 
     @FXML
     private void deleteSelectedEquipment() {
-        if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
+        if (!CustomerService.currentUserHasAnyRole(CustomerService.ROLES.ADMINISTRATOR,CustomerService.ROLES.MANAGER)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
 
             return;
@@ -102,13 +99,13 @@ public class MainFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Добавляем меню в начало главного окна
+
         vbMainFormRoot.getChildren().addFirst(formService.loadMenuForm());
 
 
         tvEquipmentList.setItems(productService.getAllEquipment());
 
-        // Настраиваем колонки таблицы
+
         tcId.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getId().toString()));
         tcName.setCellValueFactory(cellData ->
@@ -130,7 +127,7 @@ public class MainFormController implements Initializable {
         tcStock.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getStock())));
 
-        // При выборе строки отображаем панель редактирования
+
         tvEquipmentList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
             @Override
             public void changed(ObservableValue<? extends Product> observable, Product oldValue, Product newValue) {
@@ -138,7 +135,7 @@ public class MainFormController implements Initializable {
             }
         });
 
-        // Обработчик двойного клика: при двойном клике по строке открывается подробная информация
+
         tvEquipmentList.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 Product selectedProduct = tvEquipmentList.getSelectionModel().getSelectedItem();

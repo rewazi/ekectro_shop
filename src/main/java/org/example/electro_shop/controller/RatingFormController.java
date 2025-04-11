@@ -41,7 +41,7 @@ public class RatingFormController {
     public void initialize() {
 
         cbPeriodType.setItems(FXCollections.observableArrayList("Все время", "Год", "Месяц", "Неделя"));
-        tfPeriodValue.setPromptText("Введите значение (например, 2025 или 3)");
+        tfPeriodValue.setPromptText("Введите значение (например, 2025)");
 
 
         tcEquipment.setCellValueFactory(cellData -> cellData.getValue().equipmentProperty());

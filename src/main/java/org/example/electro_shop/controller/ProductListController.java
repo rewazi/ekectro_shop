@@ -51,7 +51,7 @@ public class ProductListController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Заполняем таблицу данными
+
         tcId.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getId().toString()));
         tcName.setCellValueFactory(cellData ->
@@ -66,7 +66,7 @@ public class ProductListController implements Initializable {
         List<Product> productList = productService.getAllEquipment();
         tvEquipment.setItems(FXCollections.observableArrayList(productList));
 
-        // Скрываем кнопки "Редактировать" и "Удалить", если пользователь не администратор
+
         if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
             editEquipmentButton.setVisible(false);
             deleteEquipmentButton.setVisible(false);

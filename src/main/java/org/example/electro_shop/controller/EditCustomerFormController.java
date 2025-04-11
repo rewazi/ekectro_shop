@@ -2,6 +2,7 @@ package org.example.electro_shop.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.example.electro_shop.model.entity.Customer;
 import org.example.electro_shop.service.CustomerService;
@@ -20,6 +21,8 @@ public class EditCustomerFormController {
     private TextField usernameField;
     @FXML
     private TextField balanceField;
+    @FXML
+    private ComboBox<String> roleComboBox;
 
     private final CustomerService customerService;
     private final FormService formService;
@@ -35,15 +38,24 @@ public class EditCustomerFormController {
         this.customer = customer;
 
         if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
-
             formService.loadCustomerListForm();
             return;
         }
+
+
+        firstnameField.setText(customer.getFirstname());
+        lastnameField.setText(customer.getLastname());
+        usernameField.setText(customer.getUsername());
+        balanceField.setText(String.valueOf(customer.getBalance()));
+
+
+        roleComboBox.setValue(customer.getRoles().isEmpty() ? "CUSTOMER" : customer.getRoles().iterator().next());
     }
 
     @FXML
     private void saveCustomer() {
         if (customer != null) {
+
             customer.setFirstname(firstnameField.getText());
             customer.setLastname(lastnameField.getText());
             customer.setUsername(usernameField.getText());
@@ -56,12 +68,16 @@ public class EditCustomerFormController {
                 return;
             }
 
+
+            String selectedRole = roleComboBox.getValue();
+            customer.getRoles().clear();
+            customer.getRoles().add(selectedRole);
+
             try {
                 customerService.update(customer);
                 showSuccess("Покупатель успешно обновлен!");
                 formService.loadCustomerListForm();
             } catch (Exception e) {
-
                 showError("Ошибка обновления: " + e.getMessage());
             }
         }
@@ -69,9 +85,7 @@ public class EditCustomerFormController {
 
     @FXML
     private void cancelEdit() {
-
         formService.loadCustomerListForm();
-
     }
 
     private void showError(String message) {
@@ -90,4 +104,3 @@ public class EditCustomerFormController {
         alert.showAndWait();
     }
 }
-
