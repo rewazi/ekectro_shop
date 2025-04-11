@@ -48,8 +48,14 @@ public class EditCustomerFormController {
         usernameField.setText(customer.getUsername());
         balanceField.setText(String.valueOf(customer.getBalance()));
 
-
+        // Устанавливаем текущую роль в ComboBox
         roleComboBox.setValue(customer.getRoles().isEmpty() ? "CUSTOMER" : customer.getRoles().iterator().next());
+
+
+        if (customer.getUsername().equals("admin")) {
+            usernameField.setDisable(true);
+            roleComboBox.setDisable(true);
+        }
     }
 
     @FXML
@@ -58,7 +64,15 @@ public class EditCustomerFormController {
 
             customer.setFirstname(firstnameField.getText());
             customer.setLastname(lastnameField.getText());
-            customer.setUsername(usernameField.getText());
+
+
+            if (!customer.getUsername().equals("admin")) {
+                customer.setUsername(usernameField.getText());
+
+                String selectedRole = roleComboBox.getValue();
+                customer.getRoles().clear();
+                customer.getRoles().add(selectedRole);
+            }
 
             try {
                 double balance = Double.parseDouble(balanceField.getText());
@@ -67,11 +81,6 @@ public class EditCustomerFormController {
                 showError("Баланс должен быть числом!");
                 return;
             }
-
-
-            String selectedRole = roleComboBox.getValue();
-            customer.getRoles().clear();
-            customer.getRoles().add(selectedRole);
 
             try {
                 customerService.update(customer);

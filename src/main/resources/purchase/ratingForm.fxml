@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.Label?>
 <VBox xmlns="http://javafx.com/javafx/23.0.2"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.example.electro_shop.controller.RatingFormController"
@@ -15,17 +13,13 @@
     <children>
         <Label text="Рейтинг продаваемости товаров" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
 
-        <ComboBox fx:id="cbPeriodType" prefWidth="200"/>
-        <TextField fx:id="tfPeriodValue" prefWidth="200" promptText="Введите значение (например, 2025 или 3)"/>
-
-        <Button text="Посчитать рейтинг" onAction="#handleCalculateRating"/>
-        <Button text="Главная" onAction="#goToMainForm"/>
-
         <TableView fx:id="tvRating" prefWidth="600" prefHeight="300">
             <columns>
                 <TableColumn fx:id="tcEquipment" text="Продукты" prefWidth="300"/>
                 <TableColumn fx:id="tcTotalSold" text="Количество проданного" prefWidth="300"/>
             </columns>
         </TableView>
+
+        <Button text="Главная" onAction="#goToMainForm"/>
     </children>
 </VBox>
