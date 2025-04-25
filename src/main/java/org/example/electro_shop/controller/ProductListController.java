@@ -38,7 +38,7 @@ public class ProductListController implements Initializable {
     @FXML
     private TableColumn<Product, String> tcStock;
 
-    // Кнопки редактирования и удаления
+
     @FXML
     private Button editEquipmentButton;
     @FXML

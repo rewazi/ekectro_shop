@@ -21,7 +21,6 @@ public class CustomerService {
         initManager();
     }
 
-
     private void initSuperUser() {
         if (repository.count() > 0) {
             return;
@@ -38,9 +37,7 @@ public class CustomerService {
         repository.save(admin);
     }
 
-
     private void initManager() {
-
         Optional<Customer> managerOptional = repository.findByUsername("manager");
         if (managerOptional.isPresent()) {
             return;
@@ -51,7 +48,6 @@ public class CustomerService {
         manager.setFirstname("Manager");
         manager.setLastname("DefaultManager");
         manager.setBalance(0.0);
-
         manager.getRoles().add(ROLES.MANAGER.toString());
         manager.getRoles().add(ROLES.CUSTOMER.toString());
         repository.save(manager);
@@ -107,20 +103,24 @@ public class CustomerService {
         return false;
     }
 
+    // Метод для получения текущего пользователя
+    public static Customer currentUser() {
+        return currentCustomer;
+    }
+
     public boolean isUsernameTaken(String username) {
         return repository.findByUsername(username).isPresent();
     }
-
 
     public void deleteCustomer(Long customerId) {
         repository.deleteById(customerId);
     }
 
     public Customer changePassword(Long userId, String newPassword) {
-
         if (!currentUserHasRole(ROLES.ADMINISTRATOR)) {
             if (currentCustomer == null || !currentCustomer.getId().equals(userId)) {
-
+                // Если пользователь не администратор, он может сменить пароль только себе
+                return null;
             }
         }
 

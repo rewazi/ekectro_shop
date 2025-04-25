@@ -89,7 +89,7 @@ public class ChangePasswordController {
                 lblResult.setText("Введите новый пароль.");
                 return;
             }
-            // Вызываем метод смены пароля в CustomerService
+
             Customer updatedUser = customerService.changePassword(userId, newPassword);
             lblResult.setText("Пароль успешно изменён для пользователя: " + updatedUser.getUsername());
         } catch (SecurityException se) {

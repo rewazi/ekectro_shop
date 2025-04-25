@@ -37,24 +37,23 @@ public class EditCustomerFormController {
     public void setCustomer(Customer customer) {
         this.customer = customer;
 
-        if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
-            formService.loadCustomerListForm();
-            return;
-        }
-
-
+        // Убираем проверку роли, делаем кнопку доступной для всех
         firstnameField.setText(customer.getFirstname());
         lastnameField.setText(customer.getLastname());
         usernameField.setText(customer.getUsername());
         balanceField.setText(String.valueOf(customer.getBalance()));
 
-        // Устанавливаем текущую роль в ComboBox
+        // Устанавливаем роль (по умолчанию "CUSTOMER" или текущую роль пользователя)
         roleComboBox.setValue(customer.getRoles().isEmpty() ? "CUSTOMER" : customer.getRoles().iterator().next());
 
+        // Блокируем поле username только для редактирования пользователя "admin" или текущего пользователя
+        if (customer.getUsername().equals("admin") || customer.getUsername().equals(CustomerService.currentUser().getUsername())) {
+            usernameField.setDisable(true);  // Блокируем поле для редактирования имени пользователя
+        }
 
-        if (customer.getUsername().equals("admin")) {
-            usernameField.setDisable(true);
-            roleComboBox.setDisable(true);
+        // Блокируем изменение роли для текущего пользователя или пользователя с логином "admin"
+        if (customer.getUsername().equals(CustomerService.currentUser().getUsername()) || customer.getUsername().equals("admin")) {
+            roleComboBox.setDisable(true);  // Блокируем поле для редактирования роли
         }
     }
 
@@ -65,15 +64,15 @@ public class EditCustomerFormController {
             customer.setFirstname(firstnameField.getText());
             customer.setLastname(lastnameField.getText());
 
-
-            if (!customer.getUsername().equals("admin")) {
+            // Блокируем изменение имени пользователя для "admin" и текущего пользователя
+            if (!customer.getUsername().equals("admin") && !customer.getUsername().equals(CustomerService.currentUser().getUsername())) {
                 customer.setUsername(usernameField.getText());
-
                 String selectedRole = roleComboBox.getValue();
                 customer.getRoles().clear();
                 customer.getRoles().add(selectedRole);
             }
 
+            // Обработка поля баланса
             try {
                 double balance = Double.parseDouble(balanceField.getText());
                 customer.setBalance(balance);
@@ -82,6 +81,7 @@ public class EditCustomerFormController {
                 return;
             }
 
+            // Сохранение изменений
             try {
                 customerService.update(customer);
                 showSuccess("Покупатель успешно обновлен!");

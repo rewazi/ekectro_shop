@@ -36,11 +36,11 @@ public class RatingFormController {
 
     @FXML
     public void initialize() {
-        // Настройка столбцов таблицы
+
         tcEquipment.setCellValueFactory(cellData -> cellData.getValue().equipmentProperty());
         tcTotalSold.setCellValueFactory(cellData -> cellData.getValue().totalSoldProperty());
 
-        // Загружаем рейтинг при инициализации
+
         loadAllTimeRating();
     }
 
@@ -48,7 +48,7 @@ public class RatingFormController {
         ObservableList<EquipmentRating> ratings = FXCollections.observableArrayList();
         List<Object[]> results = purchaseService.getTopEquipmentAllTime();
 
-        // Добавляем результаты в таблицу
+
         for (Object[] row : results) {
             String equipmentName = ((Product) row[0]).getName();
             int totalSold = ((Number) row[1]).intValue();
