@@ -20,10 +20,9 @@ import java.util.ResourceBundle;
 
 @Component
 public class ProductListController implements Initializable {
-
     private final ProductService productService;
     private final FormService formService;
-
+    private final CustomerService customerService;  // << добавили
     @FXML
     private TableView<Product> tvEquipment;
 
@@ -44,9 +43,17 @@ public class ProductListController implements Initializable {
     @FXML
     private Button deleteEquipmentButton;
 
-    public ProductListController(ProductService productService, FormService formService) {
+    public ProductListController(ProductService productService,
+                                 FormService formService,
+                                 CustomerService customerService) {  // << инжектим
         this.productService = productService;
         this.formService = formService;
+        this.customerService = customerService;
+
+
+
+
+
     }
 
     @Override
@@ -67,7 +74,7 @@ public class ProductListController implements Initializable {
         tvEquipment.setItems(FXCollections.observableArrayList(productList));
 
 
-        if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
+        if (!customerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
             editEquipmentButton.setVisible(false);
             deleteEquipmentButton.setVisible(false);
         }
@@ -80,7 +87,7 @@ public class ProductListController implements Initializable {
 
     @FXML
     private void editSelectedEquipment() {
-        if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
+        if (!customerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
 
             return;
         }
@@ -99,7 +106,7 @@ public class ProductListController implements Initializable {
 
     @FXML
     private void deleteSelectedEquipment() {
-        if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
+        if (!customerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
 
             return;
         }

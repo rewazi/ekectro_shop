@@ -1,6 +1,5 @@
 package org.example.electro_shop.service;
 
-import org.example.electro_shop.ElectroStoreApplication;
 import org.example.electro_shop.controller.EditCustomerFormController;
 import org.example.electro_shop.controller.EditProductFormController;
 import org.example.electro_shop.controller.EditSupplierFormController;
@@ -13,26 +12,46 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @Service
 public class FormService {
+    private Stage primaryStage;
     private final SpringFXMLLoader springFXMLLoader;
 
+
+    @Autowired
     public FormService(SpringFXMLLoader springFXMLLoader) {
         this.springFXMLLoader = springFXMLLoader;
     }
 
-    public void loadLoginForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/user/loginForm.fxml");
-        Parent root;
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
+
+    public Stage getPrimaryStage() {
+        if (primaryStage == null) {
+            throw new IllegalStateException("Primary stage not set in FormService");
+        }
+        return primaryStage;
+    }
+
+    private Parent loadRoot(FXMLLoader loader) {
         try {
-            root = fxmlLoader.load();
+            return loader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void loadLoginForm() {
+        FXMLLoader loader = springFXMLLoader.load("/user/loginForm.fxml");
+        Parent root = loadRoot(loader);
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
         getPrimaryStage().setTitle("ElectroStore - Вход");
@@ -40,14 +59,19 @@ public class FormService {
         getPrimaryStage().show();
     }
 
+    public void loadRegistrationForm() {
+        FXMLLoader loader = springFXMLLoader.load("/user/registrationForm.fxml");
+        Parent root = loadRoot(loader);
+        Scene scene = new Scene(root);
+        getPrimaryStage().setScene(scene);
+        getPrimaryStage().setTitle("Регистрация нового пользователя");
+        getPrimaryStage().centerOnScreen();
+        getPrimaryStage().show();
+    }
+
     public void loadMainForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/main/mainForm.fxml");
-        Parent root;
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        FXMLLoader loader = springFXMLLoader.load("/main/mainForm.fxml");
+        Parent root = loadRoot(loader);
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
         getPrimaryStage().setTitle("ElectroStore - Главная");
@@ -55,33 +79,44 @@ public class FormService {
         getPrimaryStage().show();
     }
 
-    private Stage getPrimaryStage() {
-        return ElectroStoreApplication.primaryStage;
-    }
-
-    public void loadNewEquipmentForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/product/newEquipmentForm.fxml");
-        Parent root;
+    public Parent loadMenuForm() {
+        FXMLLoader loader = springFXMLLoader.load("/menu/menuForm.fxml");
         try {
-            root = fxmlLoader.load();
+            return loader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void loadNewEquipmentForm() {
+        FXMLLoader loader = springFXMLLoader.load("/product/newEquipmentForm.fxml");
+        Parent root = loadRoot(loader);
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
         getPrimaryStage().setTitle("Создание нового продукта");
+        getPrimaryStage().centerOnScreen();
+        getPrimaryStage().show();
     }
 
-    public void loadEditEquipmentForm(Product selectedProduct) {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/product/editProductForm.fxml");
+    public void loadEquipmentListForm() {
+        FXMLLoader loader = springFXMLLoader.load("/product/ProductList.fxml");
+        Parent root = loadRoot(loader);
+        Scene scene = new Scene(root);
+        getPrimaryStage().setScene(scene);
+        getPrimaryStage().setTitle("Список продуктов");
+        getPrimaryStage().centerOnScreen();
+        getPrimaryStage().show();
+    }
+
+    public void loadEditEquipmentForm(Product product) {
+        FXMLLoader loader = springFXMLLoader.load("/product/editProductForm.fxml");
         try {
-            Parent editEquipmentFormRoot = fxmlLoader.load();
-            EditProductFormController controller = fxmlLoader.getController();
-            controller.setEditEquipment(selectedProduct);
-            Scene scene = new Scene(editEquipmentFormRoot);
-            getPrimaryStage().setTitle("ElectroStore - Редактирование продукта");
+            Parent root = loader.load();
+            EditProductFormController controller = loader.getController();
+            controller.setEditEquipment(product);
+            Scene scene = new Scene(root);
             getPrimaryStage().setScene(scene);
-            getPrimaryStage().setResizable(false);
+            getPrimaryStage().setTitle("Редактирование продукта");
             getPrimaryStage().centerOnScreen();
             getPrimaryStage().show();
         } catch (IOException e) {
@@ -89,36 +124,35 @@ public class FormService {
         }
     }
 
-    public Parent loadMenuForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/menu/menuForm.fxml");
+    public void loadSelectedEquipmentForm(Product product) {
+        FXMLLoader loader = springFXMLLoader.load("/product/selectedProductForm.fxml");
         try {
-            return fxmlLoader.load();
+            Parent root = loader.load();
+            SelectedProductFormController controller = loader.getController();
+            controller.setEquipment(product);
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Информация о продукте");
+            stage.setResizable(false);
+            stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void loadSupplierForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/supplier/supplierForm.fxml");
-        Parent root;
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        FXMLLoader loader = springFXMLLoader.load("/supplier/supplierForm.fxml");
+        Parent root = loadRoot(loader);
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
         getPrimaryStage().setTitle("Создание нового поставщика");
+        getPrimaryStage().centerOnScreen();
+        getPrimaryStage().show();
     }
 
     public void loadSupplierListForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/supplier/supplierList.fxml");
-        Parent root;
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        FXMLLoader loader = springFXMLLoader.load("/supplier/supplierList.fxml");
+        Parent root = loadRoot(loader);
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
         getPrimaryStage().setTitle("Список поставщиков");
@@ -126,47 +160,15 @@ public class FormService {
         getPrimaryStage().show();
     }
 
-    public void loadRegistrationForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/user/registrationForm.fxml");
-        Parent root;
+    public void loadEditSupplierForm(Supplier supplier) {
+        FXMLLoader loader = springFXMLLoader.load("/supplier/editSupplierForm.fxml");
         try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Scene scene = new Scene(root);
-        getPrimaryStage().setScene(scene);
-        getPrimaryStage().setTitle("Регистрация нового пользователя");
-    }
-
-    public void loadSelectedEquipmentForm(Product selectedProduct) {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/product/selectedProductForm.fxml");
-        try {
-            Parent selectedEquipmentFormRoot = fxmlLoader.load();
-            SelectedProductFormController controller = fxmlLoader.getController();
-            controller.setEquipment(selectedProduct);
-
-            Stage stage = new Stage();
-            stage.setTitle("Информация об продукте");
-            stage.setScene(new Scene(selectedEquipmentFormRoot));
-            stage.setResizable(false);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void loadEditSupplierForm(Supplier selectedSupplier) {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/supplier/editSupplierForm.fxml");
-        try {
-            Parent editSupplierFormRoot = fxmlLoader.load();
-            EditSupplierFormController controller = fxmlLoader.getController();
-            controller.setEditSupplier(selectedSupplier);
-            Scene scene = new Scene(editSupplierFormRoot);
-            getPrimaryStage().setTitle("ElectroStore - Редактирование поставщика");
+            Parent root = loader.load();
+            EditSupplierFormController controller = loader.getController();
+            controller.setEditSupplier(supplier);
+            Scene scene = new Scene(root);
             getPrimaryStage().setScene(scene);
-            getPrimaryStage().setResizable(false);
+            getPrimaryStage().setTitle("Редактирование поставщика");
             getPrimaryStage().centerOnScreen();
             getPrimaryStage().show();
         } catch (IOException e) {
@@ -174,16 +176,9 @@ public class FormService {
         }
     }
 
-
-
     public void loadNewCustomerForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/customer/newCustomerForm.fxml");
-        Parent root;
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        FXMLLoader loader = springFXMLLoader.load("/customer/newCustomerForm.fxml");
+        Parent root = loadRoot(loader);
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
         getPrimaryStage().setTitle("Создание нового покупателя");
@@ -192,13 +187,8 @@ public class FormService {
     }
 
     public void loadCustomerListForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/customer/customerList.fxml");
-        Parent root;
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        FXMLLoader loader = springFXMLLoader.load("/customer/customerList.fxml");
+        Parent root = loadRoot(loader);
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
         getPrimaryStage().setTitle("Список покупателей");
@@ -206,30 +196,25 @@ public class FormService {
         getPrimaryStage().show();
     }
 
-    public void loadEquipmentListForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/product/ProductList.fxml");
-        Parent root;
+    public void loadEditCustomerForm(Customer customer) {
+        FXMLLoader loader = springFXMLLoader.load("/customer/editCustomerForm.fxml");
         try {
-            root = fxmlLoader.load();
+            Parent root = loader.load();
+            EditCustomerFormController controller = loader.getController();
+            controller.setCustomer(customer);
+            Scene scene = new Scene(root);
+            getPrimaryStage().setScene(scene);
+            getPrimaryStage().setTitle("Редактирование покупателя");
+            getPrimaryStage().centerOnScreen();
+            getPrimaryStage().show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Scene scene = new Scene(root);
-        getPrimaryStage().setScene(scene);
-        getPrimaryStage().setTitle("Список продуктов");
-        getPrimaryStage().centerOnScreen();
-        getPrimaryStage().show();
     }
 
-
     public void loadPurchaseForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/purchase/purchaseForm.fxml");
-        Parent root;
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        FXMLLoader loader = springFXMLLoader.load("/purchase/purchaseForm.fxml");
+        Parent root = loadRoot(loader);
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
         getPrimaryStage().setTitle("Покупка товара");
@@ -238,13 +223,8 @@ public class FormService {
     }
 
     public void loadIncomeForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/purchase/incomeForm.fxml");
-        Parent root;
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        FXMLLoader loader = springFXMLLoader.load("/purchase/incomeForm.fxml");
+        Parent root = loadRoot(loader);
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
         getPrimaryStage().setTitle("Доход магазина");
@@ -253,13 +233,8 @@ public class FormService {
     }
 
     public void loadChangePasswordForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/user/ChangePasswordForm.fxml");
-        Parent root;
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        FXMLLoader loader = springFXMLLoader.load("/user/ChangePasswordForm.fxml");
+        Parent root = loadRoot(loader);
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
         getPrimaryStage().setTitle("Смена пароля");
@@ -267,49 +242,13 @@ public class FormService {
         getPrimaryStage().show();
     }
 
-
-
     public void loadRatingForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/purchase/ratingForm.fxml");
-        Parent root;
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        FXMLLoader loader = springFXMLLoader.load("/purchase/ratingForm.fxml");
+        Parent root = loadRoot(loader);
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
         getPrimaryStage().setTitle("Рейтинг товаров");
         getPrimaryStage().centerOnScreen();
         getPrimaryStage().show();
     }
-
-
-    public void loadEditCustomerForm(Customer selectedCustomer) {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/customer/editCustomerForm.fxml");
-
-        Parent root;
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        EditCustomerFormController controller = fxmlLoader.getController();
-
-        if (controller != null) {
-            controller.setCustomer(selectedCustomer);
-            Scene scene = new Scene(root);
-            getPrimaryStage().setTitle("Редактирование покупателя");
-            getPrimaryStage().setScene(scene);
-            getPrimaryStage().setResizable(false);
-            getPrimaryStage().centerOnScreen();
-            getPrimaryStage().show();
-        } else {
-            throw new RuntimeException("Контроллер не был инициализирован правильно.");
-        }
-    }
 }
-
-
-

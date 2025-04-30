@@ -6,21 +6,41 @@ import org.example.electro_shop.service.FormService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.GenericApplicationContext;
 
 @SpringBootApplication
 public class ElectroStoreApplication extends Application {
-    public static ConfigurableApplicationContext applicationContext;
-    public static Stage primaryStage;
+
+    private ConfigurableApplicationContext applicationContext;
+    private Stage primaryStage;
 
     public static void main(String[] args) {
-        applicationContext = SpringApplication.run(ElectroStoreApplication.class, args);
+
         launch(args);
     }
 
     @Override
+    public void init() {
+
+        String[] args = getParameters().getRaw().toArray(new String[0]);
+        this.applicationContext = SpringApplication.run(ElectroStoreApplication.class, args);
+
+
+        ((GenericApplicationContext) applicationContext)
+                .getBeanFactory()
+                .registerSingleton("javafxApp", this);
+    }
+
+    @Override
     public void start(Stage primaryStage) throws Exception {
-        ElectroStoreApplication.primaryStage = primaryStage;
+        this.primaryStage = primaryStage;
         FormService formService = applicationContext.getBean(FormService.class);
+        formService.setPrimaryStage(primaryStage);
         formService.loadLoginForm();
+    }
+
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 }

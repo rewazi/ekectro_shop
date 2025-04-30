@@ -16,6 +16,7 @@ public class EditSupplierFormController {
 
     private final SupplierService supplierService;
     private final FormService formService;
+    private final CustomerService customerService;
 
     @FXML
     private TextField tfId;
@@ -28,9 +29,10 @@ public class EditSupplierFormController {
 
     private Supplier editSupplier;
 
-    public EditSupplierFormController(SupplierService supplierService, FormService formService) {
+    public EditSupplierFormController(SupplierService supplierService, FormService formService, CustomerService customerService) {
         this.supplierService = supplierService;
         this.formService = formService;
+        this.customerService = customerService;
     }
 
 
@@ -46,8 +48,8 @@ public class EditSupplierFormController {
     @FXML
     private void saveSupplier() throws IOException {
 
-        if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR) &&
-                !CustomerService.currentUserHasRole(CustomerService.ROLES.MANAGER)) {
+        if (!customerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR) &&
+                !customerService.currentUserHasRole(CustomerService.ROLES.MANAGER)) {
 
             return;
         }

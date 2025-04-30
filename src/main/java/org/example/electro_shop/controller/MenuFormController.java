@@ -135,7 +135,7 @@ public class MenuFormController implements Initializable {
 
     @FXML
     private void logout() {
-        CustomerService.currentCustomer = null;
+        customerService.setCurrentUser(null);
         formService.loadLoginForm();
     }
 

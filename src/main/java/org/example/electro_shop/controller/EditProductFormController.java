@@ -26,6 +26,7 @@ public class EditProductFormController implements Initializable {
     private final ProductService productService;
     private final SupplierService supplierService;
     private Product editProduct;
+    private final CustomerService customerService;
 
     @FXML
     private TextField tfId;
@@ -45,18 +46,19 @@ public class EditProductFormController implements Initializable {
     @FXML
     private TextField tfStock;
 
-    public EditProductFormController(FormService formService, ProductService productService, SupplierService supplierService) {
+    public EditProductFormController(FormService formService, ProductService productService, SupplierService supplierService, CustomerService customerService) {
         this.formService = formService;
         this.productService = productService;
         this.supplierService = supplierService;
+        this.customerService = customerService;
     }
 
     @FXML
     private void goEdit() throws IOException {
 
         // Проверка прав пользователя
-        if (!CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR) &&
-                !CustomerService.currentUserHasRole(CustomerService.ROLES.MANAGER)) {
+        if (!customerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR) &&
+                !customerService.currentUserHasRole(CustomerService.ROLES.MANAGER)) {
             return;
         }
 

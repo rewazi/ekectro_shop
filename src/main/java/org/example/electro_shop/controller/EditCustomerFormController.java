@@ -28,6 +28,7 @@ public class EditCustomerFormController {
     private final FormService formService;
     private Customer customer;
 
+
     @Autowired
     public EditCustomerFormController(CustomerService customerService, FormService formService) {
         this.customerService = customerService;
@@ -47,12 +48,12 @@ public class EditCustomerFormController {
         roleComboBox.setValue(customer.getRoles().isEmpty() ? "CUSTOMER" : customer.getRoles().iterator().next());
 
         // Блокируем поле username только для редактирования пользователя "admin" или текущего пользователя
-        if (customer.getUsername().equals("admin") || customer.getUsername().equals(CustomerService.currentUser().getUsername())) {
+        if (customer.getUsername().equals("admin") || customer.getUsername().equals(customerService.currentUser().getUsername())) {
             usernameField.setDisable(true);  // Блокируем поле для редактирования имени пользователя
         }
 
         // Блокируем изменение роли для текущего пользователя или пользователя с логином "admin"
-        if (customer.getUsername().equals(CustomerService.currentUser().getUsername()) || customer.getUsername().equals("admin")) {
+        if (customer.getUsername().equals(customerService.currentUser().getUsername()) || customer.getUsername().equals("admin")) {
             roleComboBox.setDisable(true);  // Блокируем поле для редактирования роли
         }
     }
@@ -65,7 +66,7 @@ public class EditCustomerFormController {
             customer.setLastname(lastnameField.getText());
 
             // Блокируем изменение имени пользователя для "admin" и текущего пользователя
-            if (!customer.getUsername().equals("admin") && !customer.getUsername().equals(CustomerService.currentUser().getUsername())) {
+            if (!customer.getUsername().equals("admin") && !customer.getUsername().equals(customerService.currentUser().getUsername())) {
                 customer.setUsername(usernameField.getText());
                 String selectedRole = roleComboBox.getValue();
                 customer.getRoles().clear();

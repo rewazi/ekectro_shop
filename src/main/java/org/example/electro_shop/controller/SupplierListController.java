@@ -21,6 +21,7 @@ public class SupplierListController implements Initializable {
 
     private final SupplierService supplierService;
     private final FormService formService;
+    private final CustomerService customerService;
 
     @FXML
     private TableView<Supplier> tvSupplierList;
@@ -37,9 +38,10 @@ public class SupplierListController implements Initializable {
     @FXML
     private Button deleteSupplierButton;
 
-    public SupplierListController(SupplierService supplierService, FormService formService) {
+    public SupplierListController(SupplierService supplierService, FormService formService, CustomerService customerService) {
         this.supplierService = supplierService;
         this.formService = formService;
+        this.customerService = customerService;
     }
 
     @Override
@@ -57,7 +59,7 @@ public class SupplierListController implements Initializable {
 
     @FXML
     private void editSelectedSupplier() {
-        if (!CustomerService.currentUserHasAnyRole(CustomerService.ROLES.ADMINISTRATOR,CustomerService.ROLES.MANAGER)) {
+        if (!customerService.currentUserHasAnyRole(CustomerService.ROLES.ADMINISTRATOR,CustomerService.ROLES.MANAGER)) {
 
             return;
         }
@@ -76,7 +78,7 @@ public class SupplierListController implements Initializable {
 
     @FXML
     private void deleteSelectedSupplier() {
-        if (!CustomerService.currentUserHasAnyRole(CustomerService.ROLES.ADMINISTRATOR,CustomerService.ROLES.MANAGER)) {
+        if (!customerService.currentUserHasAnyRole(CustomerService.ROLES.ADMINISTRATOR,CustomerService.ROLES.MANAGER)) {
 
             return;
         }

@@ -25,6 +25,7 @@ public class MainFormController implements Initializable {
 
     private final FormService formService;
     private final ProductService productService;
+    private final CustomerService customerService;
 
     @FXML
     private VBox vbMainFormRoot;
@@ -53,14 +54,15 @@ public class MainFormController implements Initializable {
     @FXML
     private HBox hbEditEquipment;
 
-    public MainFormController(FormService formService, ProductService productService) {
+    public MainFormController(FormService formService, ProductService productService, CustomerService customerService) {
         this.formService = formService;
         this.productService = productService;
+        this.customerService = customerService;
     }
 
     @FXML
     private void showEditEquipmentForm() {
-        if (!CustomerService.currentUserHasAnyRole(CustomerService.ROLES.ADMINISTRATOR,CustomerService.ROLES.MANAGER)) {
+        if (!customerService.currentUserHasAnyRole(CustomerService.ROLES.ADMINISTRATOR,CustomerService.ROLES.MANAGER)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
 
             return;
@@ -85,7 +87,7 @@ public class MainFormController implements Initializable {
 
     @FXML
     private void deleteSelectedEquipment() {
-        if (!CustomerService.currentUserHasAnyRole(CustomerService.ROLES.ADMINISTRATOR,CustomerService.ROLES.MANAGER)) {
+        if (!customerService.currentUserHasAnyRole(CustomerService.ROLES.ADMINISTRATOR,CustomerService.ROLES.MANAGER)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
 
             return;

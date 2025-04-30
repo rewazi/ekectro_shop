@@ -16,7 +16,7 @@ public class ChangePasswordController {
     private final CustomerService customerService;
     private final FormService formService;
 
-    public ChangePasswordController(CustomerService customerService, FormService formService) {
+    public ChangePasswordController(FormService formService,CustomerService customerService) {
         this.customerService = customerService;
         this.formService = formService;
     }
@@ -32,7 +32,7 @@ public class ChangePasswordController {
 
     @FXML
     public void initialize() {
-        if (CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
+        if (customerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
             List<Customer> allUsers = customerService.getAllCustomers();
             cbUsers.setItems(FXCollections.observableArrayList(allUsers));
 
@@ -61,8 +61,8 @@ public class ChangePasswordController {
             tfUserId.setVisible(false);
         } else {
             cbUsers.setVisible(false);
-            if (CustomerService.currentCustomer != null) {
-                tfUserId.setText(CustomerService.currentCustomer.getUsername());
+            if (customerService.getCurrentUser() != null) {
+                tfUserId.setText(customerService.getCurrentUser().getUsername());
             }
             tfUserId.setEditable(false);
             tfUserId.setVisible(true);
@@ -73,7 +73,7 @@ public class ChangePasswordController {
     private void handleChangePassword() {
         try {
             Long userId;
-            if (CustomerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
+            if (customerService.currentUserHasRole(CustomerService.ROLES.ADMINISTRATOR)) {
                 Customer selectedUser = cbUsers.getSelectionModel().getSelectedItem();
                 if (selectedUser == null) {
                     lblResult.setText("Выберите пользователя для смены пароля.");
@@ -82,7 +82,7 @@ public class ChangePasswordController {
                 userId = selectedUser.getId();
             } else {
                 // Для обычного пользователя берем id из текущего пользователя
-                userId = CustomerService.currentCustomer.getId();
+                userId = customerService.getCurrentUser().getId();
             }
             String newPassword = pfNewPassword.getText().trim();
             if (newPassword.isEmpty()) {

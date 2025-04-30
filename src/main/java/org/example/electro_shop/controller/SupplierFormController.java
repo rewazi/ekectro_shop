@@ -65,7 +65,7 @@ public class SupplierFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        if (!CustomerService.currentUserHasAnyRole(
+        if (!customerService.currentUserHasAnyRole(
                 CustomerService.ROLES.MANAGER,
                 CustomerService.ROLES.ADMINISTRATOR)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

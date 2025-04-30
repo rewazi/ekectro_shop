@@ -2,6 +2,7 @@ package org.example.electro_shop.service;
 
 import org.example.electro_shop.model.entity.Customer;
 import org.example.electro_shop.model.repository.CustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,18 +10,26 @@ import java.util.Optional;
 
 @Service
 public class CustomerService {
-    public static Customer currentCustomer;
+    private Customer currentCustomer;
 
     public enum ROLES { CUSTOMER, MANAGER, ADMINISTRATOR }
 
     private final CustomerRepository repository;
 
+
+    @Autowired
     public CustomerService(CustomerRepository repository) {
         this.repository = repository;
         initSuperUser();
         initManager();
     }
+    public Customer getCurrentUser() {
+        return currentCustomer;
+    }
 
+    public void setCurrentUser(Customer customer) {
+        this.currentCustomer = customer;
+    }
     private void initSuperUser() {
         if (repository.count() > 0) {
             return;
@@ -84,14 +93,14 @@ public class CustomerService {
         return true;
     }
 
-    public static boolean currentUserHasRole(ROLES role) {
+    public boolean currentUserHasRole(ROLES role) {
         if (currentCustomer == null) {
             return false;
         }
         return currentCustomer.getRoles().contains(role.toString());
     }
 
-    public static boolean currentUserHasAnyRole(ROLES... roles) {
+    public boolean currentUserHasAnyRole(ROLES... roles) {
         if (currentCustomer == null) {
             return false;
         }
@@ -104,7 +113,7 @@ public class CustomerService {
     }
 
     // Метод для получения текущего пользователя
-    public static Customer currentUser() {
+    public  Customer currentUser() {
         return currentCustomer;
     }
 
